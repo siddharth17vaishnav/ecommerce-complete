@@ -1,4 +1,5 @@
 import {DataSourceOptions} from "typeorm";
+import {User} from "./src/Entities/User";
 
 export const config:DataSourceOptions = {
     type: 'postgres',
@@ -8,5 +9,5 @@ export const config:DataSourceOptions = {
     password: 'asdfsfslkdjfsdjf',
     database: 'ecomm',
     synchronize: true,
-    entities: [],
+    entities: [User],
 };
