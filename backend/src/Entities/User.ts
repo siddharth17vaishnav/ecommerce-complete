@@ -7,6 +7,8 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
+export type UserRoleType = 'user' | 'admin'
+
 @Entity("users")
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -26,6 +28,9 @@ export class User extends BaseEntity {
 
   @Column({ unique: true })
   mobile: string;
+
+  @Column({ enum: ["user", "admin"] })
+  type: UserRoleType
 
   @CreateDateColumn()
   created_at: Date;

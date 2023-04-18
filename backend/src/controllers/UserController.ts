@@ -36,6 +36,7 @@ export const createUser = async (
           email,
           mobile,
           password: hashedPassword,
+          type: 'user'
         })
         .returning("*")
         .execute();
@@ -78,4 +79,26 @@ export const getUserByID = async (
   }
 };
 
-module.exports = { getUsers, createUser, getUserByID };
+export const approveAdmin = async (req: express.Request, res: express.Response) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOneBy({ email });
+    if (!user) {
+      res.status(404).send({ message: "User not found!" })
+    }
+    else {
+      const approveAdmin = await User.createQueryBuilder().update(User).set({ type: 'admin' }).where("id =:id", { id: user.id }).returning('*').execute()
+      if (approveAdmin) {
+        res.status(200).send({ message: "Approved" })
+      }
+      else {
+        res.status(403).send({ message: 'Something went wrong!' })
+      }
+    }
+  }
+  catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+}
+
+module.exports = { getUsers, createUser, getUserByID, approveAdmin };
