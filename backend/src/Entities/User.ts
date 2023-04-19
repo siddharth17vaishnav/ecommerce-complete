@@ -32,6 +32,9 @@ export class User extends BaseEntity {
   @Column({ enum: ["user", "admin"] })
   type: UserRoleType
 
+  @Column()
+  profile: string
+
   @CreateDateColumn()
   created_at: Date;
 

@@ -5,11 +5,12 @@ import {
   getUserByID,
   getUsers,
 } from "../controllers/UserController";
-
+import upload from '../Middleware/UploadFile'
 const router = express.Router();
 
+
 router.get("/api/user", getUsers);
-router.post("/api/user", createUser);
+router.post("/api/user", upload.single("profile"), createUser);
 router.post("/api/user/:email", getUserByID);
 router.post('/api/user/:email/approve', approveAdmin)
 
