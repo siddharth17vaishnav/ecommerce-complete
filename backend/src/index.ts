@@ -3,8 +3,10 @@ import { DataSource } from "typeorm";
 import express from "express";
 import cors from "cors";
 import { config } from "../ormConfig";
-import * as process from "process";
 import { userRouter } from "./Routes/UserRoutes";
+import { CategoryRouter } from "./Routes/CategoryRoutes";
+import { SubCategoryRouter } from "./Routes/SubCategoryRoutes";
+
 
 dotenv.config();
 const app = express();
@@ -19,6 +21,8 @@ const main = async () => {
       app.use(cors());
       app.use(express.json());
       app.use(userRouter);
+      app.use(CategoryRouter)
+      app.use(SubCategoryRouter)
 
       app.listen(PORT, () => {
         console.log(`SERVER STARTED ON ${PORT}`);
