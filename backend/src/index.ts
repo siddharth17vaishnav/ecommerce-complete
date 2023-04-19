@@ -6,6 +6,7 @@ import { config } from "../ormConfig";
 import { userRouter } from "./Routes/UserRoutes";
 import { CategoryRouter } from "./Routes/CategoryRoutes";
 import { SubCategoryRouter } from "./Routes/SubCategoryRoutes";
+import { ProductRouter } from "./Routes/ProductRoutes";
 
 
 dotenv.config();
@@ -23,6 +24,7 @@ const main = async () => {
       app.use(userRouter);
       app.use(CategoryRouter)
       app.use(SubCategoryRouter)
+      app.use(ProductRouter)
 
       app.listen(PORT, () => {
         console.log(`SERVER STARTED ON ${PORT}`);

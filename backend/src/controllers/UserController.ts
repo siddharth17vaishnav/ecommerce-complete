@@ -40,7 +40,7 @@ export const createUser = async (
           mobile,
           password: hashedPassword,
           type: 'user',
-          profile: req.file && req.file.filename
+          profile: req.file && req.file.filename.replaceAll(" ", "")
         })
         .returning("*")
         .execute();
