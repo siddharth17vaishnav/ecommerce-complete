@@ -27,7 +27,6 @@ export const createUser = async (
   try {
     const { first_name, last_name, email, password, mobile } = req.body;
     const existing = await User.findOneBy({ email });
-    console.log(req.file, req.body)
     if (!existing) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
