@@ -1,6 +1,7 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, OneToMany, ManyToOne } from 'typeorm'
 import { Category } from './Category'
 import { ProductImages } from './ProductImage'
+import { OrderItems } from './OrderItems'
 
 @Entity('products')
 export class Product extends BaseEntity {
@@ -27,4 +28,7 @@ export class Product extends BaseEntity {
 
     @OneToMany(() => ProductImages, (productImages) => productImages.product)
     productImages: ProductImages[]
+
+    @OneToMany(() => OrderItems, (orderItems) => orderItems.product)
+    orderItems: OrderItems[]
 }

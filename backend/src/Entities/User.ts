@@ -5,7 +5,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from "typeorm";
+import { Order } from "./Order";
 
 export type UserRoleType = 'user' | 'admin'
 
@@ -40,4 +42,7 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @ManyToOne(() => Order, (order) => order.user)
+  order: Order
 }

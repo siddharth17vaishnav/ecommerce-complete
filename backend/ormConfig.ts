@@ -13,6 +13,6 @@ export const config: DataSourceOptions = {
     password: 'asdfsfslkdjfsdjf',
     database: 'ecomm',
     synchronize: true,
-    entities: [User, Category, SubCategory, Product, ProductImages],
-    logging: true
+    entities: ["./src/Entities/**/*.ts"],
+    logging: false
 };

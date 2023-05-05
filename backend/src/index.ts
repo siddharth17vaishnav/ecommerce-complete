@@ -7,6 +7,7 @@ import { userRouter } from "./Routes/UserRoutes";
 import { CategoryRouter } from "./Routes/CategoryRoutes";
 import { SubCategoryRouter } from "./Routes/SubCategoryRoutes";
 import { ProductRouter } from "./Routes/ProductRoutes";
+import { orderRouter } from "./Routes/OrderRoutes";
 
 
 dotenv.config();
@@ -25,6 +26,7 @@ const main = async () => {
       app.use(CategoryRouter)
       app.use(SubCategoryRouter)
       app.use(ProductRouter)
+      app.use(orderRouter)
 
       app.listen(PORT, () => {
         console.log(`SERVER STARTED ON ${PORT}`);
