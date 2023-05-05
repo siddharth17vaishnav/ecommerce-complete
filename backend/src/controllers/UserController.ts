@@ -75,8 +75,8 @@ export const getUserByID = async (
   res: express.Response
 ) => {
   try {
-    const { email } = req.params;
-    const user = await User.findOneBy({ email });
+    const { userid } = req.params;
+    const user = await User.findOneBy({ id: +userid });
     res.status(200).send({ data: user });
   } catch (err) {
     res.status(500).send({ message: err.message });
@@ -85,8 +85,8 @@ export const getUserByID = async (
 
 export const approveAdmin = async (req: express.Request, res: express.Response) => {
   try {
-    const { email } = req.params;
-    const user = await User.findOneBy({ email });
+    const { userid } = req.params;
+    const user = await User.findOneBy({ id: +userid });
     if (!user) {
       res.status(404).send({ message: "User not found!" })
     }

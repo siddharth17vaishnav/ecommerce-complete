@@ -28,8 +28,8 @@ export const addSubCategory = async (req: express.Request, res: express.Response
 
 export const getSubCategories = async (req: express.Request, res: express.Response) => {
     try {
-        const { id } = req.body
-        const subcategory = await SubCategory.find({ relations: { category: true }, where: { category: { id: id } } })
+        const { categoryId } = req.params
+        const subcategory = await SubCategory.find({ relations: { category: true }, where: { category: { id: categoryId } } })
         res.status(200).send({ data: subcategory })
     }
     catch (err) {
