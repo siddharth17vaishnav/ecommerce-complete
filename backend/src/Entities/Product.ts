@@ -2,6 +2,7 @@ import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, U
 import { Category } from './Category'
 import { ProductImages } from './ProductImage'
 import { OrderItems } from './OrderItems'
+import { WishList } from './WishList'
 
 @Entity('products')
 export class Product extends BaseEntity {
@@ -31,4 +32,5 @@ export class Product extends BaseEntity {
 
     @OneToMany(() => OrderItems, (orderItems) => orderItems.product)
     orderItems: OrderItems[]
+
 }

@@ -105,4 +105,56 @@ export const approveAdmin = async (req: express.Request, res: express.Response) 
   }
 }
 
-module.exports = { getUsers, createUser, getUserByID, approveAdmin };
+
+export const userLogin = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { email, password } = req.body;
+    const findUser = await User.findOneBy({ email: email });
+    if (findUser && process.env.ACCESS_SECRET) {
+      const correctPassword = await bcrypt.compare(
+        password,
+        findUser.password
+      );
+      if (
+        correctPassword &&
+        process.env.ACCESS_SECRET &&
+        process.env.REFRESH_SECRET
+      ) {
+        const generateAccessToken = jwt.sign(
+          {
+            userId: findUser.id,
+            email: findUser.email,
+          },
+          process.env.ACCESS_SECRET,
+          { expiresIn: "30m" }
+        );
+        const generateRefreshToken = jwt.sign(
+          {
+            userId: findUser.id,
+            email: findUser.email,
+          },
+          process.env.REFRESH_SECRET,
+          { expiresIn: "30d" }
+        );
+        refreshTokens.push(generateRefreshToken);
+        res.status(200).send({
+          user: findUser,
+          accessToken: generateAccessToken,
+          refreshToken: generateRefreshToken,
+        });
+      } else {
+        res.status(401).send({ message: "Invalid password!" });
+      }
+    } else {
+      res.status(404).send({ message: "User not found!" });
+    }
+
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+module.exports = { getUsers, createUser, getUserByID, approveAdmin, userLogin };

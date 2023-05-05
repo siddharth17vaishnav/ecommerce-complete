@@ -6,8 +6,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from "typeorm";
 import { Order } from "./Order";
+import { WishList } from "./WishList";
 
 export type UserRoleType = 'user' | 'admin'
 
@@ -45,4 +47,6 @@ export class User extends BaseEntity {
 
   @ManyToOne(() => Order, (order) => order.user)
   order: Order
+  @OneToMany(() => WishList, (wishlist) => wishlist.user)
+  wishlist: WishList[]
 }

@@ -14,5 +14,5 @@ export const config: DataSourceOptions = {
     database: 'ecomm',
     synchronize: true,
     entities: ["./src/Entities/**/*.ts"],
-    logging: false
+    logging: true
 };
