@@ -20,13 +20,12 @@ export const fetch = async <T>(config: AxiosRequestConfig) => {
         const response = await AxiosInstance(config);
         result.data = response.data;
     } catch (err) {
-        const { message, statusCode, error, branding } = (err as any).response.data;
+        const { message, statusCode, error } = (err as any).response.data;
         const { status } = (err as any).response;
 
         result.error = {
             statusCode: statusCode || status,
             message: message || String(error),
-            branding,
         };
     }
 

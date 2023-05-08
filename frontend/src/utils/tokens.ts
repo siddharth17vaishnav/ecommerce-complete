@@ -1,27 +1,24 @@
-import { isServer } from "@/src/constants/flags"
 
 // set token to localStorage
-export const setAccessToken = (value: string) => {
-    if (!isServer && value) {
-        localStorage.setItem("token", JSON.stringify(value));
-        const today = new Date();
-        today.setHours(today.getHours() + 24)
-        localStorage.setItem("token_expires_on", JSON.stringify(today))
-    }
-    return;
+export const setToken = (key: string, value: string) => {
+    localStorage.setItem(key, JSON.stringify(value));
+    const today = new Date();
+    today.setHours(today.getHours() + 24)
+    localStorage.setItem("token_expires_on", JSON.stringify(today))
 }
 
-//get token from localStorage
-export const getAccessToken = () => !isServer && JSON.parse(localStorage.getItem("token") || 'null')
+//get access-token from localStorage
+export const getAccessToken = () => JSON.parse(localStorage.getItem("accessToken") || 'null')
+
+//get refresh-token from localStorage
+export const getRefreshToken = () => JSON.parse(localStorage.getItem("accessRefresh") || 'null')
 
 //get tokenExpiration from localStorage
-export const getTokenExpiration = () => !isServer && JSON.parse(localStorage.getItem("token_expires_on") || 'null')
+export const getTokenExpiration = () => JSON.parse(localStorage.getItem("token_expires_on") || 'null')
 
 // remove token and expiration from localStorage
 export const removeAccessToken = () => {
-    if (!isServer) {
-        localStorage.removeItem("token")
-        localStorage.removeItem("token_expires_on")
-    }
-    return;
+    localStorage.removeItem("accessToken")
+    localStorage.removeItem("refreshToken")
+    localStorage.removeItem("token_expires_on")
 }
