@@ -2,7 +2,8 @@ import { Nullable } from "@/src/types/main"
 import { AppStateCreator } from "../types"
 import { fetchAction } from "@/src/utils/api.utils"
 import { endpoints } from "@/src/constants/endpoints"
-import { setToken } from "@/src/utils/tokens"
+import { handleAuthError, handleAuthSuccess } from "@/src/utils/auth.utils"
+import { StoreType } from ".."
 
 export interface AuthSlice {
     user: Nullable<Record<string, string | number | boolean>>
@@ -12,17 +13,18 @@ export interface AuthSlice {
 const createAuthSlice: AppStateCreator<AuthSlice> = (set, get) => ({
     user: null,
     getUser: () => get().user,
-    login: async (value: any) => {
+    login: async (value) => {
+        const state = get()
         const res = await fetchAction({ url: endpoints.login, data: value, method: 'POST' })
 
         if (res.error) {
-            console.log(res.error.message)
+            const message = res.error.message
+            handleAuthError(state as StoreType, message)
             return null;
         }
         const response = res.data;
-        setToken("accessToken", response.accessToken)
-        setToken("refreshToken", response.refreshToken)
         set((state) => ({ ...state, user: response.user }))
+        handleAuthSuccess(state as StoreType, response)
         return response
     }
 })
