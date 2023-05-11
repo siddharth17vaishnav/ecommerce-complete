@@ -1,20 +1,20 @@
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata = {
-  title: 'Ecommerce App',
-  description: 'Ecommerce for everything!',
-}
+"use client";
+import CustomSnackbar from "@/src/components/shared/CustomSnackBar/CustomSnackBar";
+import WithLoader from "../components/shared/WithLoader/WithLoader";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body suppressHydrationWarning={true}>
+        <WithLoader>
+          <CustomSnackbar />
+          <>{children}</>
+        </WithLoader>
+      </body>
     </html>
-  )
+  );
 }

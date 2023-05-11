@@ -1,5 +1,5 @@
 import React from "react";
 
-export const page = () => {
+export default function login()  {
   return <div>page</div>;
 };
