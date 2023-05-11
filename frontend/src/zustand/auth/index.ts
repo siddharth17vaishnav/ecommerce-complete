@@ -4,6 +4,7 @@ import { fetchAction } from "@/src/utils/api.utils"
 import { endpoints } from "@/src/constants/endpoints"
 import { handleAuthError, handleAuthSuccess } from "@/src/utils/auth.utils"
 import { StoreType } from ".."
+import { getAccessToken } from "@/src/utils/tokens"
 
 export interface AuthSlice {
     user: Nullable<Record<string, string | number | boolean>>
@@ -26,6 +27,13 @@ const createAuthSlice: AppStateCreator<AuthSlice> = (set, get) => ({
         set((state) => ({ ...state, user: response.user }))
         handleAuthSuccess(state as StoreType, response)
         return response
+    },
+    fetchUser: async () => {
+        const accessToken = getAccessToken()
+        const user = get().user
+        if (accessToken) {
+            const user = await fetchAction({})
+        }
     }
 })
 
