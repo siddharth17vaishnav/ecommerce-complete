@@ -1,4 +1,4 @@
 export const endpoints = {
     login: '/login',
-    fetch_user: (id: string) => `/user/:${id}`
+    fetch_user: (id: number) => `/user/${id}`
 }

@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import merge from 'lodash/merge'
-import { getAccessToken } from './tokens'
 
 const API_PREFIX = '/api'
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_HOST
@@ -33,8 +32,9 @@ export const fetch = async <T>(config: AxiosRequestConfig) => {
 };
 
 export const fetchAction = async <T>(config: AxiosRequestConfig) => {
-    const token = getAccessToken();
-
+    // const token = getToken("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
+    const token = accessToken?.split('"')[1]
     const specificConfig = {
         headers: { Authorization: `Bearer ${token}` || '' },
     };
